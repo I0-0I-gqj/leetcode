@@ -1,0 +1,49 @@
+/* 
+比较恶心的一道题，一直在各种校验中出错，+后面只能有数字等，
+改了我12次
+*/
+int myAtoi(char * s){
+        char symbol = 0, symbol_pos = 0, more = 0;
+        int64_t num = 0;
+
+        while(*s!='\0' && *s==' ' || *s=='-' || *s=='+' || *s=='.' || *s=='0') {
+            if (*s == '-') { symbol = 1; s+=1; break; }
+            if (*s == '+') { symbol = 2; s+=1; break; }
+            if (*s == '.') { return 0;}
+            if (*s == '0' && *(s+1)!='0') {break;}
+            s+=1;
+        }
+
+        if (*s=='\0' || *s<'0' || *s>'9') {
+            return 0;
+        }
+
+        while (*s>='0' && *s <='9' && *s!='\0' && *s!='.') {
+                num = num*10 + (*s-'0');
+                if (num > INT32_MAX) {
+                    break;
+                }
+                s+=1;
+        }
+
+        if (num > INT32_MAX) {
+                more = 1;
+        }
+
+        if (symbol==1) {
+                if (more) {
+                        num = -INT32_MAX-1;
+                } else {
+                        num = -num;
+                }
+        } else {
+                if (more) {
+                        num = INT32_MAX;
+                } else {
+                        num = num;
+                }
+
+        }
+
+        return num;
+}
