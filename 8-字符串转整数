@@ -1,6 +1,17 @@
 /* 
 比较恶心的一道题，一直在各种校验中出错，+后面只能有数字等，
 改了我12次
+
+测试例:
+//#define STR "  00-42 sd wo"
+//#define STR "-91283472332"
+//#define STR " +0 123"
+//#define STR "6.5"
+//#define STR "42"
+//#define STR "words is 987"
+//#define STR "00000-42a1323"
+#define STR "-2147483647"
+
 */
 int myAtoi(char * s){
         char symbol = 0, symbol_pos = 0, more = 0;
