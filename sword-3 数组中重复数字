@@ -1,0 +1,15 @@
+int findRepeatNumber(int* nums, int numsSize){
+    int hash[100001], i;
+    
+    memset(hash, -1, 100001*sizeof(int));
+
+    for (i=0; i<numsSize; i++) {
+        if (hash[nums[i]] != -1) {
+            return nums[i];
+        } else {
+            hash[nums[i]] = nums[i];
+        }
+    }
+
+    return -1;
+}
