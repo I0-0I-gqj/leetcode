@@ -1,0 +1,26 @@
+/*
+毫无营养的题目
+*/
+char* replaceSpace(char* s){
+    
+    char *str = malloc(3*10001);
+    if (!str) {
+        return 0;
+    }
+    char *p = str;
+
+    while (*s != '\0') {
+        if (*s == ' ') {
+            strcpy(p, "%20");
+            p+=3;
+        } else {
+            *p = *s;
+            p+=1;
+        }
+
+        s+=1;
+    }
+    *p = '\0';
+
+    return str;
+}
