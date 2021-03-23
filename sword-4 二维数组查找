@@ -1,4 +1,4 @@
-/* 暴力破解 */
+/* 二叉树查找 */
 bool findNumberIn2DArray(int** matrix, int matrixSize, int* matrixColSize, int target) {
     
    if (matrixSize == 0 || *matrixColSize == 0) {
