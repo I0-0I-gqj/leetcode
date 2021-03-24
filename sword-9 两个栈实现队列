@@ -1,0 +1,49 @@
+typedef struct {
+    int stack_add[10001];
+    int stack_del[10001];
+    int stack_add_idx;
+    int stack_del_idx;
+} CQueue;
+
+
+CQueue* cQueueCreate() {
+    CQueue *q = malloc(sizeof(CQueue));
+    if (!q) {
+        return 0;
+    }
+    q->stack_add_idx = 0;
+    q->stack_del_idx = 0;
+    
+    return q;
+}
+
+void cQueueAppendTail(CQueue* obj, int value) {
+    if (!obj) return ;
+    if (obj->stack_add_idx > 10000) return;
+    obj->stack_add[obj->stack_add_idx++] = value;
+    return ;
+}
+
+int cQueueDeleteHead(CQueue* obj) {
+    if (!obj) return -1;
+    int i;
+    if (obj->stack_del_idx == 0) {
+        while (obj->stack_add_idx>0) {
+            obj->stack_del[obj->stack_del_idx++] = obj->stack_add[obj->stack_add_idx-1];
+            obj->stack_add_idx--;
+        }
+        obj->stack_add_idx = 0;
+    }
+
+    if (obj->stack_del_idx) {
+        int val = obj->stack_del[obj->stack_del_idx-1];
+        obj->stack_del_idx--;
+        return val;
+    } else {
+        return -1;
+    }
+}
+
+void cQueueFree(CQueue* obj) {
+    free(obj);
+}
