@@ -1,0 +1,21 @@
+
+/*
+动态规划算法。
+*/
+int fib(int n){
+    if (n <= 1) {
+        return n;
+    }
+    int i, sum, a, b;
+
+    sum = 0;
+    a = 0;  // f(n-2)
+    b = 1;  // f(n-1)
+    
+    for (i=2; i<=n; i++) {
+        sum = (a+b) % 1000000007;
+        a = b;
+        b = sum;
+    }
+    return sum;
+}
