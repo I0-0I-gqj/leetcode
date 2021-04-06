@@ -1,0 +1,101 @@
+typedef enum {
+    D_UP,
+    D_DOWN,
+    D_LEFT,
+    D_RIGHT,
+} D_DIRECTION ;
+
+#define DO_EXIST(_direction) {                                                        \
+    res = is_exist(board, boardSize, boardColSize, word, _direction, next_i, next_j); \
+    if (res == true) {                                                                \
+        return true;                                                                  \
+    }                                                                                 \
+}
+
+bool is_exist(char** board, int boardSize, int boardColSize, char* word, int direction, 
+    int i, int j) 
+{
+    //printf(" %c %c %d %d %d %d \n", board[i][j], *word, boardSize, boardColSize, i, j);
+
+    bool res = false;
+    char tmp = board[i][j];
+
+    int next_i, next_j, hit = 0;
+
+    if (board[i][j] == *word) {
+        
+        board[i][j] = '\0';
+        word++;
+        hit = 1;
+        if (*word == '\0') {
+            return true;
+        }
+            // 向下
+        if (direction != D_DOWN) {
+            next_i = i+1;
+            next_j = j;
+            if (next_i < boardSize) {
+                DO_EXIST(hit?D_UP:-1);
+            }
+        }
+        
+        // 向上
+        if (direction != D_UP) {
+            next_i = i-1;
+            next_j = j;
+            if (next_i >= 0) {
+                DO_EXIST(hit?D_DOWN:-1);
+            }
+        }
+
+        // 向左
+        if (direction != D_LEFT) {
+            next_i = i;
+            next_j = j-1;
+            if (next_j >= 0) {
+                DO_EXIST(hit?D_RIGHT:-1);
+            }
+        }
+
+        // 向右
+        if (direction != D_RIGHT) {
+            next_i = i;
+            next_j = j+1;
+            if (next_j < boardColSize) {
+                DO_EXIST(hit?D_LEFT:-1);
+            }
+        }
+    }  
+
+    if (res == false) {
+        board[i][j] = tmp;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool exist(char** board, int boardSize, int* boardColSize, char* word){
+
+    if (!boardSize && !*boardColSize || !word) {
+        return false;
+    }
+    
+    bool res;
+    int i, j;
+    char tmp;
+
+    for (i=0; i<boardSize; i++) {
+        for (j=0; j<*boardColSize; j++) {
+            if (board[i][j] == *word) {
+                //tmp = board[i][j];
+                res = is_exist(board, boardSize, *boardColSize, word, -1, i, j);
+                if (res == true) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+} 
