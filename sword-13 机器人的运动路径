@@ -1,0 +1,51 @@
+
+int getVal(int num)
+{
+    int sum = 0;
+    while (num) {
+        sum += num%10;
+        num /= 10;
+    }
+    return sum;
+}
+
+int getMovCount(int i, int j, int m, int n, int k, char *arry[], int *hit) 
+{
+    // printf(" %d %d - %d %d - %d \n", i, j, (getVal(i) + getVal(j)), k, arry[i][j]);
+    if (i < m && j < n && !arry[i][j] && (getVal(i) + getVal(j) <= k)) {
+        (*hit)++;
+        arry[i][j] = 1;
+    } else {
+        return -1;
+    }
+
+    // 向右
+    if (j < n-1) {
+        getMovCount(i, j+1, m, n, k, arry, hit);
+    }
+
+    // 向下
+    if (i < m-1) {
+        getMovCount(i+1, j, m, n, k, arry, hit);
+    }
+
+    return 0;
+}
+
+int movingCount(int m, int n, int k){
+    int i,j, hit = 0;
+
+    char *arry[m];
+    for (i=0; i<m; i++) {
+        arry[i] = (char *)malloc(sizeof(char) * n);
+        memset(arry[i], 0, sizeof(char) * n);
+    } 
+
+    getMovCount(0, 0, m, n, k, arry, &hit);
+
+    for (i=0; i<m; i++) {
+        free(arry[i]);
+    }
+
+    return hit;
+}
